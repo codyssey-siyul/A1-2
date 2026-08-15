@@ -103,9 +103,14 @@ KAKAO_API_KEY="YOUR_KAKAO_API_KEY"
 ## 4. 결과물 확인  
 프로그램 실행이 완료되면 results/ 폴더에 다음과 같은 결과물 생성  
 
+![](images/result_files.png)  
+
 ### 1) 원본 데이터 JSON
+
+![](images/travel_json.png)  
+
 \- 원본 JSON 파일에는 API를 통해 수집 및 생성된 데이터를 구조화하여 저장  
-\- 다음과 같은 데이터 포함  
+\- 최소 다음과 같은 데이터 포함  
 
 ```text
 {
@@ -119,6 +124,10 @@ KAKAO_API_KEY="YOUR_KAKAO_API_KEY"
 
 
 ### 2) 최종 여행 리포트
+
+![](images/travel_report.png)  
+![](images/caching.png)  
+
 \- 최종 여행 리포트는 Markdown 형식으로 저장  
 \- 리포트에는 다음 항목이 포함  
 
@@ -141,17 +150,32 @@ KAKAO_API_KEY="YOUR_KAKAO_API_KEY"
 ## 5. 예외 처리 및 안정성 정책  
 
 ### 1) API 키 미설정
+
+<img src="images/error1.png" width="600">  
+
 \- API 키가 환경 변수에 설정되어 있지 않은 경우 프로그램을 즉시 종료하고 API 키 설정 방법을 안내  
 
+
 ### 2) 지도/장소 검색 API 오류  
+
+<img src="images/error2.png" width="600">  
+
 \- Kakao Local API 호출 과정에서 네트워크 오류, 인증 오류, 쿼터 초과 등의 문제가 발생하더라도 프로그램 전체가 중단되지 않도록 처리  
 \- 또한 API 호출은 정상적으로 이루어졌지만 검색 결과가 0인 경우에도 오류로 처리하지 않고, 맛집 정보를 '데이터 없음'으로 표시한 후 최종 리포트 생성을 계속 진행하도록 구성  
 
+
 ### 3) Gemini JSON 파싱 오류  
+
+<img src="images/error3.png" width="600">  
+
 \- Gemini API의 응답이 요구한 JSON 형식으로 파싱되지 않는 경우를 고려하여 파싱에 실패하면 최대 1회까지 재요청하도록 하여 정상적인 JSON 형식으로 다시 응답하도록 유도  
 \- 무한 재시도를 방지하기 위해 재시도 횟수는 1회로 제한  
 
+
 ### 4) 오류 기록  
+
+<img src="images/error4.png" width="600">  
+
 \- 프로그램 실행 과정에서 발생한 오류는 내부적으로 오류 목록에 기록  
 \- 최종 원본 JSON의 errors 항목에 오류 내용을 저장하여 프로그램 실행 중 어떤 단계에서 문제가 발생했는지 확인 가능  
 
